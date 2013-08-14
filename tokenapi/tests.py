@@ -2,11 +2,18 @@ import json
 
 from django.test import TestCase
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
+try:
+    from django.contrib.auth import get_user_model
+except ImportError: # django < 1.5
+    from django.contrib.auth.models import User
+else:
+    User = get_user_model()
+
 from tokenapi.tokens import token_generator
+
 
 class TokenManagementTestCase(TestCase):
 
